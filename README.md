@@ -21,6 +21,7 @@ Ce projet sert de site vitrine pour la société Liberty Céramique mais aussi d
 - Spring Data JPA
 - Spring Security
 - Authentification JWT
+- Gestion de la base avec Flyway pour les migrations
 - Base de données : PostgreSQL
 
 ### Frontend
@@ -120,6 +121,8 @@ Backend
 - Protection des endpoints sensibles
 
 - Gestion des rôles et autorisations
+  
+- Flyway : migrations versionnées de la base de données, création automatique des tables et scripts initiaux
 
 Frontend
 
@@ -138,6 +141,3 @@ Les variables sensibles (base de données) sont définies via des variables d’
 L’utilisation de Docker garantit un environnement identique entre développement et démonstration
 
 Le mode Docker est recommandé pour l’évaluation du projet
-
-
-
