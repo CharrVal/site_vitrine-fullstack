@@ -1,0 +1,57 @@
+<div class="container mt-4">
+
+  <div class="mb-3">
+    <button
+      routerLink="/categoriesCreate"
+      class="btn btn-sm btn-outline-admin"
+    >
+      ← Créer une catégorie
+    </button>
+  </div>
+
+  <div class="d-flex justify-content-center align-items-center">
+    <div class="card shadow-sm p-4 w-100" style="max-width: 600px;">
+
+      <h3 class="fw-bold text-center text-admin mb-4">
+        Liste des catégories
+      </h3>
+
+      @if (errorMessage) {
+        <div class="alert alert-danger text-center">
+          {{ errorMessage }}
+        </div>
+      }
+
+      @if (categories.length > 0) {
+        <ul class="list-group">
+          @for (cat of categories; track cat.id) {
+            <li class="list-group-item category-item d-flex justify-content-between align-items-center mb-2">
+              <div>
+                <strong>{{ cat.name }}</strong>
+              </div>
+
+              <div class="d-flex align-items-center">
+                <span class="badge bg-secondary rounded-pill me-2">
+                  {{ cat.products?.length || 0 }}
+                </span>
+                <button
+                  class="btn btn-sm btn-outline-danger"
+                  (click)="deleteCategory(cat.id)"
+                >
+                  Supprimer
+                </button>
+              </div>
+            </li>
+          }
+        </ul>
+      }
+
+      @if (!categories || categories.length === 0) {
+        <p class="text-muted text-center mt-3">
+          Aucune catégorie disponible.
+        </p>
+      }
+
+    </div>
+  </div>
+</div>

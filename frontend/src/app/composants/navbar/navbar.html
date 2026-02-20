@@ -1,0 +1,65 @@
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #cf6953">
+  <div class="container-fluid">
+
+    <!-- Logo -->
+    <a class="navbar-brand fw-semibold d-flex align-items-center" routerLink="/accueil">
+      <img src="assets/images/logo.png" alt="Logo" width="50" height="50" class="d-inline-block align-text-center me-2">
+      Liberty Céramique
+    </a>
+
+    <!-- Hamburger -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+            data-bs-target="#navbarNav" aria-controls="navbarNav"
+            aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <!-- Contenu collapsible -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+
+      <!-- Liens principaux à gauche -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        @for (link of [{ label: 'Liste des produits', route: '/productList' }]; track link.route) {
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="link.route">{{ link.label }}</a>
+          </li>
+        }
+        @if (userLoggedService.isLoggedIn) {
+          <li class="nav-item">
+            <a class="nav-link" routerLink="/controlPanel">Panneau de gestion</a>
+          </li>
+        }
+      </ul>
+
+      <!-- Barre de recherche -->
+      <form class="d-flex my-2 my-lg-0 w-100 w-lg-auto justify-content-center" role="search" style="max-width: 300px;">
+        <div class="input-group input-group-sm w-100">
+          <input type="search" class="form-control" placeholder="Rechercher" aria-label="Search"/>
+          <button class="btn btn-outline-light" type="submit">
+            <i class="bi bi-search"></i>
+          </button>
+        </div>
+      </form>
+
+      <!-- Connexion / Déconnexion à droite -->
+      <ul class="navbar-nav ms-lg-3">
+        @if (userLoggedService.isLoggedIn) {
+          <li class="nav-item d-flex align-items-center">
+            <span class="text-white fw-semibold me-2">
+              Bonjour {{ userLoggedService.user?.username }}
+            </span>
+            <button class="btn btn-outline-light btn-sm" (click)="logout()">Déconnexion</button>
+          </li>
+        }
+        @if (!userLoggedService.isLoggedIn) {
+          <li class="nav-item">
+            <a class="nav-link d-flex align-items-center" href="/connexion">
+              <i class="bi bi-box-arrow-in-right fs-4 text-white"></i>
+            </a>
+          </li>
+        }
+      </ul>
+
+    </div>
+  </div>
+</nav>

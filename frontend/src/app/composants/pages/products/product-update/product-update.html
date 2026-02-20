@@ -1,0 +1,111 @@
+<div class="d-flex justify-content-center align-items-start mt-4">
+  <div class="card shadow-sm p-4 w-100" style="max-width: 700px;">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="fw-bold text-admin mb-0">Modifier le produit</h2>
+      <a routerLink="/productList" class="btn btn-outline-admin">← Retour</a>
+    </div>
+
+    <div class="d-flex flex-column align-items-center mb-3 w-100">
+      @if (successMessage) {
+        <div class="alert alert-success text-center w-100">{{ successMessage }}</div>
+      }
+      @if (errorMessage) {
+        <div class="alert alert-danger text-center w-100">{{ errorMessage }}</div>
+      }
+    </div>
+
+    @if (product) {
+      <form [formGroup]="productForm" (ngSubmit)="onSubmit()">
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Nom</label>
+          <input class="form-control" formControlName="name">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Description</label>
+          <textarea class="form-control" rows="4" formControlName="description"></textarea>
+        </div>
+
+        <div class="row mb-3">
+          <div class="col-md-4">
+            <label class="form-label fw-semibold">Prix</label>
+            <input type="number" class="form-control" formControlName="price">
+          </div>
+          <div class="col-md-8">
+            <label class="form-label fw-semibold">Catégorie</label>
+            <select class="form-select" formControlName="categoryId">
+              <option [value]="null">-- Sélectionner --</option>
+              @for (cat of categories; track cat.id) {
+                <option [value]="cat.id">{{ cat.name }}</option>
+              }
+            </select>
+          </div>
+        </div>
+
+        @if (product.images.length > 0) {
+          <div class="mb-3">
+            <label class="form-label fw-semibold">Images actuelles</label>
+
+            <div class="d-flex flex-wrap gap-3">
+              @for (img of product.images; track img.id) {
+                <div class="text-center">
+                  <img
+                    [src]="getImageUrl(img.imagePath)"
+                    class="img-thumbnail mb-1"
+                    style="width: 100px; height: 100px; object-fit: cover;"
+                  >
+
+                  <div class="form-check">
+                    <input
+                      class="form-check-input"
+                      type="checkbox"
+                      [checked]="deletedImageIds.includes(img.id)"
+                      (change)="toggleImageToDelete(img.id)"
+                    >
+                    <label class="form-check-label small">
+                      Supprimer
+                    </label>
+                  </div>
+                </div>
+              }
+            </div>
+          </div>
+        }
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Ajouter de nouvelles images</label>
+          <div class="input-group mb-2">
+            <input
+              type="file"
+              class="form-control"
+              id="uploadFile"
+              multiple
+              (change)="onFileSelected($event)"
+            >
+            <label class="input-group-text" for="uploadFile">Upload</label>
+          </div>
+
+          <div class="d-flex flex-wrap gap-2 mt-2">
+            <img *ngFor="let img of previewImages"
+                [src]="img"
+                class="img-thumbnail rounded shadow-sm"
+                style="width: 100px; height: 100px; object-fit: cover;">
+          </div>
+        </div>
+
+        <div class="mb-3 d-flex gap-2">
+          <button type="submit" class="btn btn-admin" [disabled]="productForm.invalid">
+            Mettre à jour
+          </button>
+          <button type="button" class="btn btn-outline-admin" (click)="cancel()">
+            Annuler
+          </button>
+        </div>
+
+      </form>
+    }
+
+  </div>
+</div>

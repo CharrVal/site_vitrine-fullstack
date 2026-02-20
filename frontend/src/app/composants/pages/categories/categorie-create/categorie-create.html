@@ -1,0 +1,74 @@
+<div class="container mt-4">
+
+  <div class="mb-3">
+    <button
+      routerLink="/categoriesList"
+      class="btn btn-sm btn-outline-admin"
+    >
+      ← Catégories existantes
+    </button>
+  </div>
+
+  <div class="d-flex justify-content-center align-items-center">
+    <div class="card shadow-sm p-4 w-100" style="max-width: 600px;">
+
+      <h3 class="fw-bold text-center text-admin mb-4">
+        Créer une catégorie
+      </h3>
+
+      <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+
+        <div class="mb-3">
+          <label class="form-label">Nom de la catégorie</label>
+          <input
+            class="form-control"
+            formControlName="name"
+            placeholder="Ex : Électronique"
+          >
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Produits à assigner</label>
+          <select
+            class="form-select"
+            formControlName="productIds"
+            multiple
+          >
+            @for (p of products; track p.id) {
+              <option [value]="p.id">
+                {{ p.name }}
+              </option>
+            }
+          </select>
+
+          <small class="text-muted">
+            Maintenez Ctrl (Cmd sur Mac) pour sélectionner plusieurs produits
+          </small>
+        </div>
+
+        <button
+          type="submit"
+          class="btn btn-admin w-100"
+          [disabled]="categoryForm.invalid"
+        >
+          Créer la catégorie
+        </button>
+
+      </form>
+
+      @if (successMessage) {
+        <div class="text-success mt-3 text-center">
+          {{ successMessage }}
+        </div>
+      }
+
+      @if (errorMessage) {
+        <div class="text-danger mt-3 text-center">
+          {{ errorMessage }}
+        </div>
+      }
+
+    </div>
+  </div>
+</div>
+

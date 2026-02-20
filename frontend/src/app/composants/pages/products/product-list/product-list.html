@@ -1,0 +1,73 @@
+<div class="container mt-8">
+
+  <div class="d-flex flex-column align-items-center mb-3 w-100">
+    @if (successMessage) {
+      <div class="alert alert-success text-center w-100">
+        {{ successMessage }}
+      </div>
+    }
+    @if (errorMessage) {
+      <div class="alert alert-danger text-center w-100">
+        {{ errorMessage }}
+      </div>
+    }
+  </div>
+
+  <div class="mb-4 d-flex flex-wrap justify-content-center gap-2 w-100">
+    <button
+      class="btn btn-outline-admin"
+      (click)="filterByCategory()"
+      [class.btn-admin]="selectedCategoryId === null"
+    >
+      Tous
+    </button>
+
+    @for (cat of categories; track cat.id) {
+      <button
+        class="btn"
+        [class.btn-admin]="cat.id === selectedCategoryId"
+        [class.btn-outline-admin]="cat.id !== selectedCategoryId"
+        (click)="filterByCategory(cat.id)"
+      >
+        {{ cat.name }}
+      </button>
+    }
+  </div>
+
+  <div class="products-container d-flex flex-wrap justify-content-start gap-3 mt-4">
+
+    @if (products.length > 0) {
+      @for (product of products; track product.id) {
+        <div class="product-card flex-grow-0">
+
+          <h5 class="card-title">{{ product.name }}</h5>
+
+          @if (product.images.length > 0) {
+            <img [src]="getImageUrl(product.images[0].imagePath)"
+                alt="{{ product.name }}"
+                class="product-image rounded">
+          }
+
+          <p class="card-text">{{ product.description | slice:0:50 }}...</p>
+          <p class="fw-bold">{{ product.price | currency: "EUR" }}</p>
+
+          @if (userLoggedService.isLoggedIn) {
+            <div class="d-flex flex-column gap-2 mt-2">
+              <a [routerLink]="['productUpdate/', product.id]" class="btn btn-admin btn-sm w-100">
+                Modifier
+              </a>
+              <button class="btn btn-danger btn-sm w-100" (click)="deleteProduct(product.id)">
+                Supprimer
+              </button>
+            </div>
+          }
+        </div>
+      }
+    }
+
+    @if (products.length === 0) {
+      <p class="text-muted text-center mt-3 w-100">Aucun produit disponible.</p>
+    }
+
+  </div>
+</div>

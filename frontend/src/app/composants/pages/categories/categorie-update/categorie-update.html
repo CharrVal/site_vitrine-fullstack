@@ -1,0 +1,28 @@
+<div class="container mt-4">
+  <h2>Modifier la catégorie</h2>
+
+  <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()">
+
+    <div class="mb-3">
+      <label class="form-label">Nom de la catégorie</label>
+      <input class="form-control" formControlName="name">
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label">Produits assignés</label>
+      <select class="form-select" formControlName="productIds" multiple>
+        <option *ngFor="let p of products" [value]="p.id">{{ p.name }}</option>
+      </select>
+      <small class="text-muted">Maintenez Ctrl (Cmd) pour sélectionner plusieurs produits</small>
+    </div>
+
+    <button type="submit" class="btn btn-primary" [disabled]="categoryForm.invalid">
+      Mettre à jour
+    </button>
+    <button type="button" class="btn btn-secondary ms-2" (click)="cancel()">Annuler</button>
+
+  </form>
+
+  <div *ngIf="successMessage" class="text-success mt-3">{{ successMessage }}</div>
+  <div *ngIf="errorMessage" class="text-danger mt-3">{{ errorMessage }}</div>
+</div>

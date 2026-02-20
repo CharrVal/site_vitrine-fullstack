@@ -1,0 +1,46 @@
+<div class="d-flex justify-content-center align-items-start" style="margin-top: 80px;">
+  <div class="card shadow-sm p-4 w-100 login-card" style="max-width: 380px;">
+
+    <h3 class="fw-bold text-center text-admin mb-4">Connexion</h3>
+
+    <form [formGroup]="form" (ngSubmit)="connecter()">
+
+      <div class="mb-3">
+        <label for="login" class="form-label fw-semibold">Identifiant</label>
+        <input type="text" id="login" class="form-control form-control-admin" placeholder="Entrez votre login" formControlName="username">
+      </div>
+
+    <div class="mb-3">
+      <label for="password" class="form-label fw-semibold">Mot de passe</label>
+      <div class="input-group">
+        <input 
+          [type]="showPassword ? 'text' : 'password'" 
+          id="password" 
+          class="form-control form-control-admin" 
+          placeholder="Entrez votre mot de passe" 
+          formControlName="password">
+        <button 
+          type="button" 
+          class="btn btn-outline-secondary" 
+          (click)="showPassword = !showPassword">
+          <i class="bi" [class.bi-eye]="!showPassword" [class.bi-eye-slash]="showPassword"></i>
+        </button>
+      </div>
+    </div>
+
+      <div class="mb-3 text-end">
+        <a routerLink="/mot-de-passe-oublie" class="small text-admin-dark text-decoration-none">Mot de passe oublié ?</a>
+      </div>
+
+      <div *ngIf="errorMessage" class="alert alert-danger text-center">
+        {{ errorMessage }}
+      </div>
+
+      <div class="d-grid">
+        <button type="submit" class="btn btn-admin btn-lg" [disabled]="form.invalid">Se connecter</button>
+      </div>
+
+    </form>
+
+  </div>
+</div>

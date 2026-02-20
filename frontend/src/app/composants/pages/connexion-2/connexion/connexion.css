@@ -1,0 +1,51 @@
+.login-card {
+  border: 2px solid #cf6953;   /* couleur charte */
+  border-radius: 16px;         
+  background-color: #fff7f5;   /* fond clair */
+  box-shadow: 0 4px 20px rgba(0,0,0,0.15);
+  padding: 30px 25px;
+}
+
+/* Inputs stylisés */
+.form-control-admin {
+  border: 1.5px solid #cf6953;
+  border-radius: 8px;
+  padding: 10px;
+  transition: all 0.3s ease;
+}
+
+.form-control-admin:focus {
+  border-color: #a84f42;
+  box-shadow: 0 0 5px rgba(207,105,83,0.5);
+}
+
+/* Bouton harmonisé */
+.btn-admin {
+  background-color: #cf6953;
+  color: #fff;
+  border-radius: 8px;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.btn-admin:hover {
+  background-color: #a84f42;
+  color: #fff;
+}
+
+/* Mot de passe toggle */
+.password-toggle {
+  position: absolute;
+  top: 50%;
+  right: 10px;
+  transform: translateY(-50%);
+  border: none;
+  background: none;
+  padding: 0;
+  cursor: pointer;
+  color: #cf6953;
+}
+
+.password-toggle:hover {
+  color: #a84f42;
+}
