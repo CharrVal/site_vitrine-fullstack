@@ -1,5 +1,6 @@
 package com.artisan.vitrine.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +20,8 @@ public class Category {
     @Column(nullable = false, unique = true)
     private String name;
 
-    @OneToMany(mappedBy = "category")
+    @OneToMany(mappedBy = "category", fetch = FetchType.EAGER)
+    @JsonManagedReference
     private List<Product> products = new ArrayList<>();
 
     public Category( String name, List<Product> products) {

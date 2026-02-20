@@ -38,9 +38,9 @@
 
     @if (products.length > 0) {
       @for (product of products; track product.id) {
-        <div class="product-card flex-grow-0">
+        <div class="product-card flex-grow-0" [routerLink]="['/productList', product.id]" style="cursor: pointer;">
 
-          <h5 class="card-title">{{ product.name }}</h5>
+          <h5 class="card-title text-center font-weight-bold mb-2">{{ product.name }}</h5>
 
           @if (product.images.length > 0) {
             <img [src]="getImageUrl(product.images[0].imagePath)"

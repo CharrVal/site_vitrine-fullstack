@@ -16,6 +16,7 @@ export class ProductDetailComponent implements OnInit {
   product: Product | null = null;
   isLoading: boolean = true;
   errorMessage = '';
+showFullDescription: any;
 
   constructor(
     private route: ActivatedRoute,

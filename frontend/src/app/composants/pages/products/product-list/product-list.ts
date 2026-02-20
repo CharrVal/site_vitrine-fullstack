@@ -95,7 +95,7 @@ export class ProductListComponent implements OnInit{
       this.productService.getByCategory(id)
         .subscribe(res => {
           this.products = res;
-          this.cdr.markForCheck(); // <-- déclenche l'affichage immédiatement
+          this.cdr.markForCheck();
         });
     }
   }
