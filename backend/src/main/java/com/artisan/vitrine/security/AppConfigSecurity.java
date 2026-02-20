@@ -12,6 +12,7 @@ import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
+import org.springframework.security.config.annotation.web.configurers.HeadersConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -47,16 +48,19 @@ public class AppConfigSecurity {
                     .requestMatchers("/connexion").permitAll()
                     .requestMatchers("/error").permitAll()
 
-                    // ACCÈS PUBLIC (clients)
+                    // ACCÈS PUBLIC
                     .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/categories/**").permitAll()
-                    .requestMatchers("/images/**").permitAll()
-                    .requestMatchers("/uploads/**").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/images/**").permitAll()
 
                     // ACCÈS ADMIN
                     .requestMatchers(HttpMethod.POST, "/api/products/**").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.PUT, "/api/products/**").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.DELETE, "/api/products/**").hasRole("ADMIN")
+
+                    .requestMatchers(HttpMethod.POST, "/api/categories/**").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.PUT, "/api/categories/**").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.DELETE, "/api/categories/**").hasRole("ADMIN")
 
                     .requestMatchers(HttpMethod.GET, "/api/users").hasRole("ADMIN")
 
@@ -66,20 +70,33 @@ public class AppConfigSecurity {
         // Désactivé Cross Site Request Forgery
         // Non préconisé pour les API REST en stateless.
         // Sauf pour POST, PUT, PATCH et DELETE
-        http.csrf(AbstractHttpConfigurer::disable);
+        http
+                .csrf(AbstractHttpConfigurer::disable)
+                .sessionManagement(session ->
+                        session.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                );
 
         http.cors(Customizer.withDefaults());
+
+        http.headers(headers -> headers
+                .contentSecurityPolicy(csp -> csp
+                        .policyDirectives(
+                                "default-src 'self'; " +
+                                        "script-src 'self'; " +
+                                        "style-src 'self'; " +
+                                        "img-src 'self' data:; " +
+                                        "font-src 'self'; " +
+                                        "connect-src 'self' http://localhost:4000 http://localhost:8080" // en prod : connect-src 'self' https://mon-domaine.com
+                        )
+                )
+                .frameOptions(HeadersConfigurer.FrameOptionsConfig::deny)
+        );
 
         //Connexion de l'utilisateur
         http.authenticationProvider(authenticationProvider);
 
         //Activer le filtre JWT et l'authentication de l'utilisateur
         http.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
-
-        // Session Stateless
-        http.sessionManagement(session -> {
-            session.sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        });
 
         //http.formLogin(Customizer.withDefaults());
 
@@ -91,8 +108,8 @@ public class AppConfigSecurity {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowedOrigins(List.of("http://localhost:4000"));
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-        config.setAllowedHeaders(List.of("*"));
-        config.setAllowCredentials(true);
+        config.setAllowedHeaders(List.of("*")); // A remplacer en prod par : "https://ton-front.com"
+        config.setAllowCredentials(false);
 
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", config);

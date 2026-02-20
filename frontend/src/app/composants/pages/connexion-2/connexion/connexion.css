@@ -6,7 +6,6 @@
   padding: 30px 25px;
 }
 
-/* Inputs stylisés */
 .form-control-admin {
   border: 1.5px solid #cf6953;
   border-radius: 8px;
@@ -33,7 +32,6 @@
   color: #fff;
 }
 
-/* Mot de passe toggle */
 .password-toggle {
   position: absolute;
   top: 50%;

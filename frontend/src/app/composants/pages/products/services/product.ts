@@ -42,5 +42,10 @@ constructor(private http: HttpClient) {}
     return this.http.delete<void>(`${this.apiUrl}/${id}`);
   }
 
+  searchProducts(term: string): Observable<Product[]> {
+    return this.http.get<Product[]>(`http://localhost:8080/api/products/search?search=${term}`);
+  }
+
+
 }
 

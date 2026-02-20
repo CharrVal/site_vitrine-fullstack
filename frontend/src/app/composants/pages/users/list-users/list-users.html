@@ -1,0 +1,39 @@
+<div class="container mt-5">
+
+  <div class="d-flex justify-content-end mb-3 w-100">
+    <a routerLink="/controlPanel" class="btn btn-outline-admin">
+      Panneau de gestion
+    </a>
+  </div>
+
+  <div class="d-flex flex-column align-items-center mb-3 w-100">
+    @if (errorMessage) {
+      <div class="alert alert-danger text-center w-100">
+        {{ errorMessage }}
+      </div>
+    }
+  </div>
+
+  <div class="users-container d-flex flex-wrap justify-content-start gap-3 mt-4">
+
+    @if (users.length > 0) {
+      @for (user of users; track user.id) {
+        <div class="user-card card shadow-sm p-3 flex-grow-0" style="width: 220px; cursor: pointer;">
+          
+          <div class="text-center mb-2">
+            👤
+          </div>
+
+          <h5 class="card-title text-center">{{ user.username }}</h5>
+          <p class="card-text text-center"><strong>Rôle :</strong> {{ user.role.libelle }}</p>
+
+        </div>
+      }
+    }
+
+    @if (users.length === 0) {
+      <p class="text-muted text-center mt-3 w-100">Aucun utilisateur trouvé.</p>
+    }
+
+  </div>
+</div>

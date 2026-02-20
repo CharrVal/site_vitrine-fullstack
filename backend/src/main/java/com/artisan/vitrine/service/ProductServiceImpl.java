@@ -19,8 +19,10 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -133,6 +135,17 @@ public class ProductServiceImpl implements ProductService {
 
         Product saved = repository.save(product);
         return mapper.toResponse(saved);
+    }
+
+    @Override
+    public List<ProductResponseDTO> searchProducts(String search) {
+        if (search == null || search.trim().isEmpty()) {
+            return Collections.emptyList();
+        }
+        List<Product> products = repository.findTop10ByNameContainingIgnoreCase(search.trim());
+        return products.stream()
+                .map(mapper:: toResponse)
+                .collect(Collectors.toList());
     }
 
     @Override

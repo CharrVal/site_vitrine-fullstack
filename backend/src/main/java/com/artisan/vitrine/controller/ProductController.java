@@ -34,6 +34,12 @@ public class ProductController {
         return ResponseEntity.ok(service.findById(id));
     }
 
+    @GetMapping("/search")
+    public ResponseEntity<List<ProductResponseDTO>> searchProducts(@RequestParam String search) {
+        List<ProductResponseDTO> results = service.searchProducts(search);
+        return ResponseEntity.ok(results);
+    }
+
     @PostMapping(consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<ProductResponseDTO> createProduct(@RequestPart("product") @Valid ProductRequestDTO dto, @RequestPart("images") List<MultipartFile> images) throws IOException {
         ProductResponseDTO created = service.createProduct(dto, images);

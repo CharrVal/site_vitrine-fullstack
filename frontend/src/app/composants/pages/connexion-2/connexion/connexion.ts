@@ -5,7 +5,6 @@ import { Router, RouterModule } from '@angular/router';
 import { AuthService } from '../services/auth-service';
 import { UserLogged } from '../interface/user-logged';
 import { UserLoggedService } from '../services/user-logged-service';
-import { Token } from '@angular/compiler';
 
 @Component({
   selector: 'app-connexion',

@@ -1,21 +1,18 @@
 <div class="container mt-4">
 
-  <div class="mb-3">
-    <button
-      routerLink="/categoriesCreate"
-      class="btn btn-sm btn-outline-admin"
-    >
+  <div class="d-flex justify-content-between mb-4">
+    <a routerLink="/categoriesCreate" class="btn btn-outline-admin">
       ← Créer une catégorie
-    </button>
+    </a>
+
+    <a routerLink="/controlPanel" class="btn btn-outline-admin">
+      Panneau de gestion
+    </a>
   </div>
 
   <div class="d-flex justify-content-center align-items-center">
     <div class="card shadow-sm p-4 w-100" style="max-width: 600px;">
-
-      <h3 class="fw-bold text-center text-admin mb-4">
-        Liste des catégories
-      </h3>
-
+      <h3 class="display-6 fw-bold text-admin text-center mb-4">Liste des catégories</h3>
       @if (errorMessage) {
         <div class="alert alert-danger text-center">
           {{ errorMessage }}

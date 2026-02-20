@@ -16,6 +16,14 @@ router-outlet {
   flex: 1;
 }
 
+.text-admin {
+  color: #cf6953;
+}
+
+.bg-admin {
+  background-color: #cf6953;
+}
+
 .navbar {
   background-color: #cf6953;
 }
@@ -93,18 +101,18 @@ router-outlet {
 
 .products-container {
   width: 100%;
-  max-width: 1200px; /* largeur maximale du conteneur de la liste */
+  max-width: 1200px;
   margin: auto;
   padding: 1rem;
   display: flex;
   flex-wrap: wrap;
-  gap: 1rem; /* espace constant entre les cartes */
-  justify-content: flex-start; /* alignement à gauche */
+  gap: 1rem;
+  justify-content: flex-start;
 }
 
-/* Chaque carte reste fixe mais flexbox gère combien peuvent tenir par ligne */
 .product-card {
-  flex: 0 0 200px; /* largeur fixe de 200px, ne s'étire pas */
+  flex: 1 1 250px; 
+  max-width: 300px;
   cursor: pointer;
   border: 2px solid #cf6953;
   border-radius: 8px;
@@ -122,7 +130,7 @@ router-outlet {
 
 .product-card img {
   width: 100%;
-  height: 150px;
+  height: 250px;
   object-fit: cover;
   border-radius: 5px;
   margin-bottom: 0.5rem;

@@ -14,6 +14,7 @@ public interface ProductService {
     ProductResponseDTO findById(Long id);
     List<ProductResponseDTO> findAllProduct();
     public ProductResponseDTO updateProduct(Long id, String productRequestDtoJson, List<MultipartFile> images, List<Long> deletedImageIds) throws IOException;
+    public List<ProductResponseDTO> searchProducts(String search);
     void deleteById(Long id);
     List<ProductResponseDTO> findByCategoryId(Long id);
 }
