@@ -1,0 +1,39 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: vitrine_db
+    environment:
+      POSTGRES_DB: vitrine
+      POSTGRES_USER: vitrine_user
+      POSTGRES_PASSWORD: vitrine_pass
+      TZ: Europe/Paris
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build:
+      context: ./backend
+    container_name: vitrine_backend
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/vitrine
+      SPRING_DATASOURCE_USERNAME: vitrine_user
+      SPRING_DATASOURCE_PASSWORD: vitrine_pass
+      TZ: Europe/Paris
+
+  frontend:
+    build:
+      context: ./frontend
+    container_name: vitrine_frontend
+    ports:
+      - "4200:80"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
