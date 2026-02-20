@@ -19,6 +19,8 @@ Ce projet sert de site vitrine pour la société Liberty Céramique mais aussi d
 - Spring Boot
 - Spring Web
 - Spring Data JPA
+- Spring Security
+- Authentification JWT
 - Base de données : PostgreSQL
 
 ### Frontend
@@ -32,6 +34,7 @@ Ce projet sert de site vitrine pour la société Liberty Céramique mais aussi d
 - Architecture REST
 - Séparation des responsabilités
 - Convention de nommage claire
+- Sécurité des API
 
 ---
 
@@ -69,7 +72,72 @@ L’ensemble de l’application (backend, frontend et base de données PostgreSQ
 À la racine du projet :
 
 ```bash
-docker compose up --build
+docker compose up
+```
+---
+
+## 🐳 Lancer le projet sans Docker
+
+Backend (Spring Boot)
+```bash
+cd backend
+./mvnw spring-boot:run
+```
+L’API est accessible sur : http://localhost:8080
+
+Frontend (Angular)
+```bash
+cd frontend
+npm install
+ng serve --port 4000
+```
+L’application est accessible sur : http://localhost:4000/accueil
+
+---
+
+## 🔐 Sécurité & authentification
+
+L’application implémente une authentification basée sur JWT (JSON Web Token).
+
+Principe
+
+- L’utilisateur s’authentifie via une route dédiée (/auth)
+
+- Le backend génère un token JWT signé
+
+- Le frontend stocke le token et l’envoie dans les requêtes HTTP via l’en-tête :
+```makefile
+Authorization: Bearer <token>
+```
+- Les routes protégées nécessitent un token valide
+
+Backend
+
+- Spring Security
+
+- Filtre JWT personnalisé
+
+- Protection des endpoints sensibles
+
+- Gestion des rôles et autorisations
+
+Frontend
+
+- Interceptor HTTP Angular
+
+- Ajout automatique du token aux requêtes
+
+- Gestion de l’état d’authentification
+
+---
+
+## 🔐 Notes importantes
+
+Les variables sensibles (base de données) sont définies via des variables d’environnement
+
+L’utilisation de Docker garantit un environnement identique entre développement et démonstration
+
+Le mode Docker est recommandé pour l’évaluation du projet
 
 
 
