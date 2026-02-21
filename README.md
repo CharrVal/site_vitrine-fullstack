@@ -1,14 +1,13 @@
 # Application Fullstack – Spring Boot & Angular
 
 ## 🧭 Présentation
-Ce projet est une application **fullstack** développée dans un objectif de démonstration de compétences techniques.
+Ce projet est une application fullstack développée dans un objectif de démonstration de compétences techniques.
 
-Il met en œuvre :
-- un **backend Java Spring Boot** exposant une API REST
-- un **frontend Angular** consommant cette API
-- une architecture claire et maintenable
+Il s’agit :
+- d’un site vitrine pour la société Liberty Céramique
+- d’une vitrine technique destinée à des recruteurs et collaborateurs techniques
 
-Ce projet sert de site vitrine pour la société Liberty Céramique mais aussi de **vitrine technique** à destination de recruteurs et de collaborateurs techniques.
+L’application repose sur une architecture moderne, sécurisée et maintenable, avec une séparation claire entre le backend et le frontend..
 
 ---
 
@@ -17,11 +16,11 @@ Ce projet sert de site vitrine pour la société Liberty Céramique mais aussi d
 ### Backend
 - Java 21
 - Spring Boot
-- Spring Web
+- Spring Web (API REST)
 - Spring Data JPA
 - Spring Security
 - Authentification JWT
-- Gestion de la base avec Flyway pour les migrations
+- Flyway (gestion des migrations de base de données)
 - Base de données : PostgreSQL
 
 ### Frontend
@@ -35,7 +34,8 @@ Ce projet sert de site vitrine pour la société Liberty Céramique mais aussi d
 - Architecture REST
 - Séparation des responsabilités
 - Convention de nommage claire
-- Sécurité des API
+- Gestion sécurisée des variables sensibles
+- Conteneurisation avec Docker
 
 ---
 
@@ -57,7 +57,7 @@ site_vitrine-fullstack/
 ## ▶️ Lancer le projet
 Le projet peut être lancé de deux manières :
 - **avec Docker (recommandé)** : environnement complet et reproductible
-- **sans Docker** : lancement manuel du backend et du frontend
+- **sans Docker** : lancement manuel du backend et du frontend (mode développement)
 
 ---
 
@@ -75,6 +75,10 @@ L’ensemble de l’application (backend, frontend et base de données PostgreSQ
 ```bash
 docker compose up
 ```
+Une fois les conteneurs démarrés :
+- Backend : http://localhost:8080
+- Frontend : http://localhost:4000
+
 ---
 
 ## 🐳 Lancer le projet sans Docker
@@ -102,42 +106,64 @@ L’application implémente une authentification basée sur JWT (JSON Web Token)
 
 Principe
 
-- L’utilisateur s’authentifie via une route dédiée (/auth)
-
-- Le backend génère un token JWT signé
-
-- Le frontend stocke le token et l’envoie dans les requêtes HTTP via l’en-tête :
+1. L’utilisateur s’authentifie via une route dédiée (/auth)
+2. Le backend génère un token JWT signé
+3. Le frontend stocke le token
+4. Le toekn est envoyé dans chaque requête protégée via l’en-tête HTTP :
 ```makefile
 Authorization: Bearer <token>
 ```
-- Les routes protégées nécessitent un token valide
+5. Les routes protégées nécessitent un token valide
 
-Backend
+---
 
+Backend - Sécurité
 - Spring Security
-
 - Filtre JWT personnalisé
-
 - Protection des endpoints sensibles
-
 - Gestion des rôles et autorisations
-  
-- Flyway : migrations versionnées de la base de données, création automatique des tables et scripts initiaux
+- Flyway :
+  - migrations versionnées
+  - création automatique des tables
+  - scripts d'initialisation
 
-Frontend
+---
 
+Frontend - Sécurité
 - Interceptor HTTP Angular
-
 - Ajout automatique du token aux requêtes
-
 - Gestion de l’état d’authentification
 
 ---
 
-## 🔐 Notes importantes
+## 🔐 Configuration & variables d’environnement
+Les informations sensibles (base de données, secret JWT) ne sont pas stockées en dur.
+Elles sont définies via :
+- des variables d’environnement
+- un fichier .env (utilisé par Docker Compose)
+- des valeurs par défaut pour le mode développement local
 
-Les variables sensibles (base de données) sont définies via des variables d’environnement
+Cette approche garantit :
+- la sécurité des secrets
+- une configuration portable
+- un environnement cohérent entre développement et démonstration
 
-L’utilisation de Docker garantit un environnement identique entre développement et démonstration
+---
 
-Le mode Docker est recommandé pour l’évaluation du projet
+## 📌 Notes importantes
+
+- L’utilisation de Docker est fortement recommandée pour tester le projet
+- Docker garantit un environnement identique entre les machines
+- Le projet est conçu pour être :
+  - lisible
+  - maintenable
+  - facilement déployable
+
+---
+
+## ✅ Conclusion
+
+Ce projet met en avant :
+- Une architecture fullstack moderne
+- Des pratiques professionnelles (Docker, Flyway, JWT, env vars)
+- Une approche orientée qualité et maintenabilité
