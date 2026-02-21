@@ -21,13 +21,11 @@ services:
     depends_on:
       - postgres
     environment:
-      - TZ = Europe/Paris
-      - DB_URL=${DB_URL}
-      - DB_USER=${DB_USER}
-      - DB_PASSWORD=${DB_PASSWORD}
-      - JWT_SECRET=${JWT_SECRET}
-    env_file:
-      - ./environnement.env
+      TZ: Europe/Paris
+      DB_URL: ${DB_URL}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      JWT_SECRET: ${JWT_SECRET}
 
   frontend:
     build:
