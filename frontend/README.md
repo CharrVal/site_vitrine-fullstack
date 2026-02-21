@@ -1,35 +1,134 @@
-# Liberty Ceramique
+### Frontend – Application Angular (Site Vitrine)
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.2.
+## 🧭 Présentation
 
-## Development server
+Ce module correspond au frontend de l’application Site Vitrine Fullstack.
+Il s’agit d’une application Angular consommant une API REST sécurisée développée avec Spring Boot.
+Le frontend est responsable de :
+- l’interface utilisateur
+- la navigation
+- l’authentification utilisateur
+- la communication avec l’API backend
+- l’affichage des données métier
 
-To start a local development server, run:
+---
 
-```bash
+## 🛠️ Stack technique
+- Angular
+- TypeScript
+- HTML / SCSS
+- RxJS
+- Angular Router
+- HTTP Client
+
+---
+
+## 🧱 Architecture du projet
+
+- frontend/
+  - src/
+    - app/
+      - composants/
+        - footer/
+        - guards/
+        - interceptor/
+        - navbar/
+        - pages/
+          - Contient chaque pages de l'applicaiton         
+      - app.routes.ts
+    - assets/
+  - Dockerfile
+  - nginx.conf
+  - angular.json
+  - package.json
+  - README.md
+
+---
+
+## ▶️ Lancer le frontend
+Option 1 – Avec Docker (recommandé)
+Le frontend est conçu pour être lancé via Docker Compose depuis la racine du projet.
+```
+docker compose up frontend
+```
+L’application est accessible sur : http://localhost:4000
+
+Option 2 – Sans Docker (mode développement)
+Prérequis
+- Node.js
+- npm
+- Angular CLI
+
+Installation
+```
+npm install
+```
+
+Lancement
+```
 ng serve --port 4000
 ```
+Application disponible sur : http://localhost:4000
 
-Once the server is running, open your browser and navigate to `http://localhost:4000/`. The application will automatically reload whenever you modify any of the source files.
+---
 
-## Building
+## 🔐 Authentification & sécurité
 
-To build the project run:
+Le frontend implémente une authentification basée sur JWT.
 
-```bash
-ng build
+Fonctionnement
+1. L’utilisateur s’authentifie via une page dédiée
+2. Le backend retourne un token JWT
+3. Le token est stocké côté frontend
+4. Les requêtes HTTP vers l’API incluent automatiquement le token
+
+Implémentation Angular
+- HTTP Interceptor
+- Ajout automatique de l’en-tête :
 ```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
-
-```bash
-ng test
+Authorization: Bearer <token>
 ```
+- Guards de routes
+- Protection des pages nécessitant une authentification
+- Service d’authentification
+- Gestion du login / logout
+- Gestion de l’état utilisateur
 
-## Additional Resources
+---
 
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+## 🌐 Communication avec le backend
+
+Les appels API sont centralisés via des services Angular.
+- Utilisation de HttpClient
+- Séparation claire entre UI et logique métier
+- Gestion des erreurs HTTP
+- URL de l’API configurable selon l’environnement
+
+---
+
+## 🎨 Interface utilisateur
+
+- Architecture modulaire
+- Composants réutilisables
+- Styles organisés (SCSS)
+- Navigation fluide via Angular Router
+
+---
+
+## 📌 Bonnes pratiques appliquées
+
+- Séparation des responsabilités
+- Composants simples et testables
+- Services dédiés aux appels API
+- Interceptors et guards centralisés
+- Code lisible et évolutif
+
+---
+
+## ✅ Objectif du frontend
+
+Ce frontend a pour objectif de démontrer :
+- la maîtrise d’Angular et TypeScript
+- l’intégration avec une API sécurisée
+- la gestion d’une authentification JWT côté client
+- une architecture claire et professionnelle
