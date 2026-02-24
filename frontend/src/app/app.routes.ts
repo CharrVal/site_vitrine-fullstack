@@ -10,10 +10,12 @@ import { Connexion } from './composants/pages/connexion-2/connexion/connexion';
 import { authGuard } from './composants/guards/auth-guard';
 import { PanneauControl } from './composants/pages/panneau-control/panneau-control';
 import { ListUsers } from './composants/pages/users/list-users/list-users';
+import { Actualites } from './composants/pages/actualites/actualites';
 
 export const routes: Routes = [
   { path: 'accueil', component: Accueil },
   { path: 'productList', component: ProductListComponent },
+  { path: 'actualites', component: Actualites},
   { path: 'controlPanel', component: PanneauControl, canActivate: [authGuard] },
   { path: 'listUsers', component: ListUsers , canActivate: [authGuard]},
   { path: 'productCreate', component: ProductCreateComponent, canActivate: [authGuard]},

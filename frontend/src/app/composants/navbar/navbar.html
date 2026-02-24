@@ -20,6 +20,11 @@
             <a class="nav-link" [routerLink]="link.route">{{ link.label }}</a>
           </li>
         }
+        @for (link of [{ label: 'Actualites', route: '/actualites' }]; track link.route) {
+          <li class="nav-item">
+            <a class="nav-link" [routerLink]="link.route">{{ link.label }}</a>
+          </li>
+        }
         @if (userLoggedService.isLoggedIn) {
           <li class="nav-item">
             <a class="nav-link" routerLink="/controlPanel">Panneau de gestion</a>
