@@ -51,6 +51,7 @@ public class AppConfigSecurity {
                     // ACCÈS PUBLIC
                     .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/categories/**").permitAll()
+                    .requestMatchers(HttpMethod.GET, "/api/actualites/**").permitAll()
                     .requestMatchers(HttpMethod.GET, "/images/**").permitAll()
 
                     // ACCÈS ADMIN
@@ -62,7 +63,14 @@ public class AppConfigSecurity {
                     .requestMatchers(HttpMethod.PUT, "/api/categories/**").hasRole("ADMIN")
                     .requestMatchers(HttpMethod.DELETE, "/api/categories/**").hasRole("ADMIN")
 
-                    .requestMatchers(HttpMethod.GET, "/api/users").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.POST, "/api/actualites/**").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.PUT, "/api/actualites/**").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.DELETE, "/api/actualites/**").hasRole("ADMIN")
+
+                    .requestMatchers(HttpMethod.GET, "/api/users/**").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.POST, "/api/users/**").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.PUT, "/api/users/**").hasRole("ADMIN")
+                    .requestMatchers(HttpMethod.DELETE, "/api/users/**").hasRole("ADMIN")
 
                     .anyRequest().authenticated();
         });
