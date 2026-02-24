@@ -1,1 +1,24 @@
-<p>add-actualite works!</p>
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+  <div class="card shadow-sm p-4 w-100" style="max-width: 600px;">
+    <h3 class="display-6 fw-bold text-center mb-4">Créer un nouveau produit</h3>
+
+    <form (ngSubmit)="onSubmit()">
+        <div>
+            <label class="form-label">Titre de votre actualité</label>
+            <textarea class="form-control" formControlName="title"></textarea>
+        </div>
+
+        <div>
+            <label class="form-label">Description de votre actualité</label>
+            <textarea class="form-control" formControlName="description"></textarea>
+        </div>
+            <button type="submit" class="btn btn-admin w-100">Créer</button>
+    </form>
+    @if(successMessage) {
+      <div div class="text-success mt-3 text-center fw-semibold" id="success-message">{{ successMessage }}</div>
+    }
+    @if(errorMessage) {
+      <div class="text-danger mt-3 text-center fw-semibold" id="error-message">{{ errorMessage }}</div>
+    }
+  </div>
+</div>

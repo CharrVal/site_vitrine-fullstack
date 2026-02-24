@@ -11,11 +11,15 @@ import { authGuard } from './composants/guards/auth-guard';
 import { PanneauControl } from './composants/pages/panneau-control/panneau-control';
 import { ListUsers } from './composants/pages/users/list-users/list-users';
 import { Actualites } from './composants/pages/actualites/actualites';
+import { AddActualite } from './composants/pages/actualites/add-actualite/add-actualite';
+import { UpdateActualite } from './composants/pages/actualites/update-actualite/update-actualite';
 
 export const routes: Routes = [
   { path: 'accueil', component: Accueil },
   { path: 'productList', component: ProductListComponent },
   { path: 'actualites', component: Actualites},
+  { path: 'addActualite', component: AddActualite},
+  { path: 'updateActualite', component: UpdateActualite},
   { path: 'controlPanel', component: PanneauControl, canActivate: [authGuard] },
   { path: 'listUsers', component: ListUsers , canActivate: [authGuard]},
   { path: 'productCreate', component: ProductCreateComponent, canActivate: [authGuard]},

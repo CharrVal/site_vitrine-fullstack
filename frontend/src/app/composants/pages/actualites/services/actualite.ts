@@ -11,12 +11,20 @@ export class ActualiteService {
 
   constructor(private http: HttpClient) {}
 
+  getById(id:number): Observable<Actualite>{
+    return this.http.get<Actualite>(`${this.apiUrl}/${id}`);
+  }
+
   getAll(): Observable<Actualite[]> {
       return this.http.get<Actualite[]>(this.apiUrl);
   }
 
-  update(id:number, actualite: Actualite): Observable<Actualite> {
-    return this.http.put<Actualite>(`${this.apiUrl}/${id}`, actualite);
+  create(formData: FormData): Observable<Actualite> {
+    return this.http.post<Actualite>('this.apiUrl', formData);
+  }
+
+  update(id:number, formData: FormData): Observable<Actualite> {
+    return this.http.put<Actualite>(`${this.apiUrl}/${id}`, formData);
   }
 
 }

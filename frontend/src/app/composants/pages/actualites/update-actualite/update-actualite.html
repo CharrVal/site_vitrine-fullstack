@@ -1,1 +1,44 @@
-<p>update-actualite works!</p>
+<div class="d-flex justify-content-center align-items-start mt-4">
+  <div class="card shadow-sm p-4 w-100" style="max-width: 700px;">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+      <h2 class="fw-bold text-admin mb-0">Modifier l'actualité</h2>
+      <a routerLink="/controlPanel" class="btn btn-outline-admin">← Panneau de gestion</a>
+    </div>
+
+    <div class="d-flex flex-column align-items-center mb-3 w-100">
+      @if (successMessage) {
+        <div class="alert alert-success text-center w-100">{{ successMessage }}</div>
+      }
+      @if (errorMessage) {
+        <div class="alert alert-danger text-center w-100">{{ errorMessage }}</div>
+      }
+    </div>
+
+    @if (actualite) {
+      <form [formGroup]="actualiteForm" (ngSubmit)="onSubmit()">
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">titre</label>
+          <input class="form-control" formControlName="title">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label fw-semibold">Description</label>
+          <textarea class="form-control" rows="4" formControlName="description"></textarea>
+        </div>
+
+        <div class="mb-3 d-flex gap-2">
+          <button type="submit" class="btn btn-admin" [disabled]="actualiteForm.invalid">
+            Mettre à jour
+          </button>
+          <button type="button" class="btn btn-outline-admin" (click)="cancel()">
+            Annuler
+          </button>
+        </div>
+
+      </form>
+    }
+
+  </div>
+</div>
