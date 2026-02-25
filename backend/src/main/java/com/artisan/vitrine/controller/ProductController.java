@@ -26,6 +26,7 @@ public class ProductController {
 
     @GetMapping
     public ResponseEntity<List<ProductResponseDTO>> getAll() {
+
         return ResponseEntity.ok(service.findAllProduct());
     }
 
@@ -60,7 +61,7 @@ public class ProductController {
         return ResponseEntity.ok(response);
     }
 
-        @DeleteMapping("/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteProductById(@PathVariable Long id) {
         service.deleteById(id);
         return ResponseEntity.noContent().build();

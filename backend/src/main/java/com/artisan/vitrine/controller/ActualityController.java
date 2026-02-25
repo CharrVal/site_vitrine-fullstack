@@ -1,8 +1,12 @@
 package com.artisan.vitrine.controller;
 
+import com.artisan.vitrine.dto.ActualityRequestDTO;
+import com.artisan.vitrine.dto.ActualityResponseDTO;
+import com.artisan.vitrine.dto.ProductResponseDTO;
 import com.artisan.vitrine.entity.Actuality;
 import com.artisan.vitrine.service.ActualityService;
 import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,28 +26,29 @@ public class ActualityController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Actuality>> getAll() {
+    public ResponseEntity<List<ActualityResponseDTO>> getAll() {
         return ResponseEntity.ok(service.getAll());
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Actuality> getById(@PathVariable Long id) {
+    public ResponseEntity<ActualityResponseDTO> getById(@PathVariable Long id) {
         return ResponseEntity.ok(service.getById(id));
     }
 
     @PostMapping
-    public ResponseEntity<Actuality> createActuality(@Valid @RequestBody Actuality actuality) {
-        return ResponseEntity.ok(service.createActuality(actuality));
+    public ResponseEntity<ActualityResponseDTO> createActuality(@Valid @RequestBody ActualityRequestDTO dto) {
+        ActualityResponseDTO created = service.createActuality(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Actuality> updateActuality(@PathVariable Long id, @Valid @RequestBody Actuality actuality) {
-        Actuality actualityExisting = service.updateActuality(id, actuality);
-        return ResponseEntity.ok(actualityExisting);
+    public ResponseEntity<ActualityResponseDTO> updateActuality(@PathVariable Long id, @Valid @RequestBody ActualityRequestDTO dto) {
+        ActualityResponseDTO response = service.updateActuality(id, dto);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteActuality(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteActualityById(@PathVariable Long id) {
         service.deleteById(id);
         return ResponseEntity.noContent().build();
     }

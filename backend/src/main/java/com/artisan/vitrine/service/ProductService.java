@@ -13,8 +13,8 @@ public interface ProductService {
     ProductResponseDTO createProduct(ProductRequestDTO dto, List<MultipartFile> images) throws IOException;
     ProductResponseDTO findById(Long id);
     List<ProductResponseDTO> findAllProduct();
-    public ProductResponseDTO updateProduct(Long id, String productRequestDtoJson, List<MultipartFile> images, List<Long> deletedImageIds) throws IOException;
-    public List<ProductResponseDTO> searchProducts(String search);
+    ProductResponseDTO updateProduct(Long id, String productRequestDtoJson, List<MultipartFile> images, List<Long> deletedImageIds) throws IOException;
+    List<ProductResponseDTO> searchProducts(String search);
     void deleteById(Long id);
     List<ProductResponseDTO> findByCategoryId(Long id);
 }
