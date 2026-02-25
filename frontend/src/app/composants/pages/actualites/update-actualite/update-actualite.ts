@@ -4,6 +4,7 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { Actualite } from '../interface/actualite';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { ActualiteRequest } from '../interface/actualite-request';
 
 @Component({
   selector: 'app-update-actualite',
@@ -15,7 +16,7 @@ export class UpdateActualite implements OnInit {
   
   successMessage: string = '';
   errorMessage: string = '';
-  actualite!: Actualite;
+  actualite!: ActualiteRequest;
   actualiteForm!: FormGroup;
   actualiteId!: number;
   
@@ -42,6 +43,13 @@ export class UpdateActualite implements OnInit {
     this.loadActualite();
   }
 
+  initForm(): void {
+    this.actualiteForm = this.fb.group({
+      title: ['', Validators.required],
+      description: ['', Validators.required],
+    });
+  }
+
    loadActualite(): void {
     this.actualiteService.getById(this.actualiteId).subscribe({
       next: actualite => {
@@ -55,43 +63,32 @@ export class UpdateActualite implements OnInit {
       },
       error: err => {
         console.error('Erreur chargement actualité', err);
-        this.router.navigate(['/controlPanel']);
+        this.router.navigate(['/accueil']);
       }
     });
   }
 
-  initForm(): void {
-    this.actualiteForm = this.fb.group({
-      title: ['', Validators.required],
-      description: ['', Validators.required],
-    });
-  }
+    onSubmit() {
+    if (this.actualiteForm.invalid) {
+      this.errorMessage = 'Formulaire invalide';
+      return;
+    }
 
-
-  onSubmit() {
-    if (this.actualiteForm.invalid) return;
-
-    const formData = new FormData();
-
-    const actualite = {
-      title: this.actualiteForm.value.title,
-      description: this.actualiteForm.value.description,
+    const formValue = this.actualiteForm.value;
+    const actualite : ActualiteRequest = {
+      title: formValue.title,
+      description: formValue.description
     };
 
-    formData.append(
-      'actualite',
-      new Blob([JSON.stringify(actualite)], { type: 'application/json' })
-    );
-
-
-    this.actualiteService.update(this.actualiteId, formData).subscribe({
-      next: () => this.router.navigate(['/productList']),
+  
+    this.actualiteService.update(this.actualiteId, actualite).subscribe({
+      next: () => this.router.navigate(['/actualites']),
       error: () => this.errorMessage = 'Erreur lors de la mise à jour'
     });
   }
   
   cancel(): void {
-    this.router.navigate(['/controlPanel']);
+    this.router.navigate(['/actualites']);
   }
 
 }

@@ -1,21 +1,31 @@
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { Actualite } from './interface/actualite';
 import { ActualiteService } from './services/actualite';
+import { ActivatedRoute, Router, RouterModule } from '@angular/router';
+import { UserLoggedService } from '../connexion-2/services/user-logged-service';
+import { FlashMessageService } from '../products/services/flash-message-service';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-actualites',
-  imports: [],
+  imports: [RouterModule, CommonModule],
   templateUrl: './actualites.html',
   styleUrl: './actualites.css',
 })
 export class Actualites implements OnInit{
+
   actualites: Actualite[] = [];
   errorMessage: String = '';
-  
+  successMessage : string = '';
+  actualiteId!: number;
   
   constructor(
     private actualiteService: ActualiteService,
-    private cdr: ChangeDetectorRef
+    public userLoggedService: UserLoggedService,
+    private cdr: ChangeDetectorRef,
+    private router:Router,
+    private route: ActivatedRoute,
+    private flashMessageService: FlashMessageService
   ) {}
 
   ngOnInit(): void {
@@ -34,4 +44,23 @@ export class Actualites implements OnInit{
       }
     });
   }
+
+  deleteActualite(id: number): void{
+    if (!confirm('⚠️ Voulez-vous vraiment supprimer cette actualité ?')) return;
+
+    this.actualiteService.delete(id).subscribe({
+      next: () => {
+        this.flashMessageService.showSuccess("Actualité supprimée avec succès !", 3000);
+        this.router.navigate(['/actualites']);
+        this.cdr.markForCheck();
+      },
+      error: (err) => {
+        console.error(err);
+        this.flashMessageService.showError("Erreur lors de la suppression de l'actualité", 5000);
+        this.router.navigate(['/actualites']);
+        this.cdr.markForCheck();
+      }
+    });
+  }
+
 }

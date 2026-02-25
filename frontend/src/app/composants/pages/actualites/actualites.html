@@ -4,12 +4,44 @@
     <p class="text-muted">Retrouvez mes prochaines actualités ci-dessous</p>
   </div>
 
+  <div class="d-flex flex-column align-items-center mb-3 w-100">
+    @if (successMessage) {
+      <div class="alert alert-success text-center w-100">
+        {{ successMessage }}
+      </div>
+    }
+    @if (errorMessage) {
+      <div class="alert alert-danger text-center w-100">
+        {{ errorMessage }}
+      </div>
+    }
+  </div>
+
     @if(actualites.length != 0){
     <div class="row g-4">
         <div class="col-md-6">
             <div class="card shadow-sm h-100">
                 <div class="card-body">
-                <h5 class="card-title">Actualités</h5>
+                @for(actualite of actualites; track actualite){
+                    <div>
+                        <h5 class="text-center text-admin font-weight-bold mb-2">{{actualite.title}}</h5>
+                    </div>
+
+                    <div>
+                        <p class="text-admin">{{actualite.description}}</p>
+                    </div>
+
+                    @if (userLoggedService.isLoggedIn) {
+                        <div class="d-flex flex-column gap-2 mt-2">
+                            <a [routerLink]="['updateActualite/', actualite.id]" class="btn btn-admin btn-sm w-100">
+                            Modifier
+                            </a>
+                            <button class="btn btn-danger btn-sm w-100" (click)="deleteActualite(actualite.id)">
+                                Supprimer
+                            </button>
+                        </div>
+                    }
+                }
                 </div>
             </div>
         </div>
