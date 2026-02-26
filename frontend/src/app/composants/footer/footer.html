@@ -4,35 +4,38 @@
     <div class="row align-items-center">
 
       <div class="col-md-6 mb-4 text-center text-md-start">
-        <h5 class="fw-bold mb-3">Contactez-nous</h5>
-        <form (submit)="onSubmit($event)">
+        <h5 class="fw-bold mb-3">Contactez moi</h5>
+        <form [formGroup]="contactForm" (ngSubmit)="onSubmit()">
           <div class="mb-2">
-            <input type="text" class="form-control" placeholder="Votre nom" required>
+            <input type="text" class="form-control" placeholder="Votre nom" formControlName="name">
+            <div class="text-danger" *ngIf="contactForm.get('name')?.touched && contactForm.get('name')?.invalid">
+              Nom requis
+            </div>
           </div>
+
           <div class="mb-2">
-            <input type="email" class="form-control" placeholder="Votre email" required>
+            <input type="email" class="form-control" placeholder="Votre email" formControlName="email">
+            <div class="text-danger" *ngIf="contactForm.get('email')?.touched && contactForm.get('email')?.invalid">
+              Email invalide
+            </div>
           </div>
+
           <div class="mb-2">
-            <textarea class="form-control" rows="3" placeholder="Votre message" required></textarea>
+            <textarea class="form-control" rows="3" placeholder="Votre message" formControlName="message"></textarea>
+            <div class="text-danger" *ngIf="contactForm.get('message')?.touched && contactForm.get('message')?.invalid">
+              Message requis
+            </div>
           </div>
+
           <button type="submit" class="btn btn-admin">Envoyer</button>
         </form>
       </div>
 
       <div class="col-md-6 mb-4 d-flex flex-column justify-content-center align-items-center">
-        <h5 class="fw-bold mb-3 text-center">Suivez-nous</h5>
-        <div class="d-flex justify-content-center justify-content-md-between gap-4 w-100">
-          <a href="https://www.facebook.com" target="####" rel="####">
-            <i class="bi bi-facebook fs-3 text-admin-dark"></i>
-          </a>
-          <a href="https://www.instagram.com" target="####" rel="####">
+        <h5 class="fw-bold mb-3 text-center">Suivez moi</h5>
+        <div class="d-flex justify-content-center justify-content-center gap-4 w-100">
+          <a href="https://www.instagram.com/liberty_ceramique/?hl=fr" target="###" rel="####">
             <i class="bi bi-instagram fs-3 text-admin-dark"></i>
-          </a>
-          <a href="https://www.youtube.com" target="####" rel="####">
-            <i class="bi bi-youtube fs-3 text-admin-dark"></i>
-          </a>
-          <a href="https://www.pinterest.com" target="####" rel="####">
-            <i class="bi bi-pinterest fs-3 text-admin-dark"></i>
           </a>
         </div>
       </div>

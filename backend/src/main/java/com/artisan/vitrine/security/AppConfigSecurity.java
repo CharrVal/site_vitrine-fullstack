@@ -52,6 +52,7 @@ public class AppConfigSecurity {
                     .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/categories/**").permitAll()
                     .requestMatchers(HttpMethod.GET, "/api/actualites/**").permitAll()
+                    .requestMatchers(HttpMethod.POST,"/api/contact").permitAll()
                     .requestMatchers(HttpMethod.GET, "/images/**").permitAll()
 
                     // ACCÈS ADMIN

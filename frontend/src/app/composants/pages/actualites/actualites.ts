@@ -24,7 +24,6 @@ export class Actualites implements OnInit{
     public userLoggedService: UserLoggedService,
     private cdr: ChangeDetectorRef,
     private router:Router,
-    private route: ActivatedRoute,
     private flashMessageService: FlashMessageService
   ) {}
 
@@ -50,9 +49,9 @@ export class Actualites implements OnInit{
 
     this.actualiteService.delete(id).subscribe({
       next: () => {
-        this.flashMessageService.showSuccess("Actualité supprimée avec succès !", 3000);
-        this.router.navigate(['/actualites']);
+        this.actualites = this.actualites.filter(a => a.id !== id);
         this.cdr.markForCheck();
+        this.flashMessageService.showSuccess("Actualité supprimée avec succès !", 3000);
       },
       error: (err) => {
         console.error(err);

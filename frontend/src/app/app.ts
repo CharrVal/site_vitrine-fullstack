@@ -23,6 +23,7 @@ export class App {
 
         this.showFooter = url === '/accueil'
                        || url === '/productList'
+                       || url === '/actualites'
                        || url.startsWith('/productList/');
       });
   }

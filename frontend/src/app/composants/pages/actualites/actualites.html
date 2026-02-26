@@ -17,34 +17,38 @@
     }
   </div>
 
-    @if(actualites.length != 0){
-    <div class="row g-4">
-        <div class="col-md-6">
-            <div class="card shadow-sm h-100">
-                <div class="card-body">
-                @for(actualite of actualites; track actualite){
-                    <div>
-                        <h5 class="text-center text-admin font-weight-bold mb-2">{{actualite.title}}</h5>
-                    </div>
+  @if (actualites.length != 0) {
+    <div class="row g-4 justify-content-center">
+      <div class="col-md-6">
 
-                    <div>
-                        <p class="text-admin">{{actualite.description}}</p>
-                    </div>
+        @for (actualite of actualites; track actualite) {
+          <div class="card mb-3 actualite-card shadow-sm">
+            <div class="card-body">
 
-                    @if (userLoggedService.isLoggedIn) {
-                        <div class="d-flex flex-column gap-2 mt-2">
-                            <a [routerLink]="['updateActualite/', actualite.id]" class="btn btn-admin btn-sm w-100">
-                            Modifier
-                            </a>
-                            <button class="btn btn-danger btn-sm w-100" (click)="deleteActualite(actualite.id)">
-                                Supprimer
-                            </button>
-                        </div>
-                    }
-                }
+              <h5 class="text-center text-admin fw-bold mb-2">
+                {{ actualite.title }}
+              </h5>
+
+              <p class="text-center mb-3">
+                {{ actualite.description }}
+              </p>
+
+              @if (userLoggedService.isLoggedIn) {
+                <div class="d-flex gap-2 mt-3">
+                  <a [routerLink]="['updateActualite/', actualite.id]" class="btn btn-admin btn-sm flex-fill">
+                    Modifier
+                  </a>
+                  <button class="btn btn-danger btn-sm flex-fill" (click)="deleteActualite(actualite.id)">
+                    Supprimer
+                  </button>
                 </div>
+              }
+
             </div>
-        </div>
+          </div>
+        }
+
+      </div>
     </div>
-    }
+  }
 </div>
