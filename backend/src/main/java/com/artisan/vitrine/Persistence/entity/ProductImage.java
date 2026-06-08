@@ -1,0 +1,30 @@
+package com.artisan.vitrine.Persistence.entity;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import jakarta.persistence.*;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+
+@Entity
+@Data
+@Table(name="productImages")
+@NoArgsConstructor
+public class ProductImage {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String imagePath;
+
+    @ManyToOne
+    @JoinColumn(name = "product_id")
+    @JsonBackReference
+    private Product product;
+
+    public ProductImage(Product product, String imagePath) {
+        this.product = product;
+        this.imagePath = imagePath;
+    }
+
+}
